@@ -6,6 +6,10 @@ const PlaceSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add an address']
     },
+    properties: {
+        description:String,
+        icon: String
+        },
     location: {
         type: {
             type: String,
@@ -18,6 +22,7 @@ const PlaceSchema = new mongoose.Schema({
         formattedAddress: String,
         city: String
     },
+    
     createdAt: {
         type: Date,
         default: Date.now()
@@ -33,8 +38,11 @@ PlaceSchema.pre('save', async function(next) {
         city: loc[0].city,
         formattedAddress: loc[0].formattedAddress
     };
-
-    // Do not save address
+    this.properties= {
+        description:'<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        icon:'bar'
+    };
+      // Do not save address
     this.address = undefined;
     next();
 });
