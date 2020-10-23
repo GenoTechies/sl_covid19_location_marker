@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 const geoCoder = require('../utils/geocoder');
 
 const PlaceSchema = new mongoose.Schema({
+    descriptiontext:String,
+    datetext:String,
+    sourcetext:String,
     address: {
         type: String,
         required: [true, 'Please add an address']
     },
     properties: {
         description:String,
+        source:String,
+        orignateddate:Date,
         icon: String
         },
     location: {
@@ -32,14 +37,18 @@ const PlaceSchema = new mongoose.Schema({
 // Before saving, convert address to geoCode
 PlaceSchema.pre('save', async function(next) {
     const loc = await geoCoder.geocode(this.address);
+    console.log('this.descriptiontext');
+    console.log(this.descriptiontext);
     this.location = {
         type: 'Point',
-        coordinates: [loc[0].longitude, loc[0].latitude],
+        coordinates: [(loc[0].longitude+(((Math.random() * 5) - 5)/1000)).toFixed(6), (loc[0].latitude+(((Math.random() * 2) - 2)/1000)).toFixed(6)],
         city: loc[0].city,
         formattedAddress: loc[0].formattedAddress
     };
     this.properties= {
-        description:'<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a <a href="http://tallulaeatbar.ticketleap.com/2012beachblanket/" target="_blank" title="Opens in a new window">Big Backyard Beach Bash and Wine Fest</a> on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.grill hot dogs.</p>',
+        description:this.descriptiontext,
+        orignateddate:new Date(this.datetext),
+        source:this.sourcetext,
         icon:'bar'
     };
       // Do not save address

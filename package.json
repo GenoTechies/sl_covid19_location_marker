@@ -1,5 +1,5 @@
 {
-  "name": "visited-places-api",
+  "name": "covid19_healthlk",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -16,5 +16,8 @@
     "mongoose": "^5.8.11",
     "node-geocoder": "^3.25.0",
     "nodemon": "^2.0.2"
+  },
+  "engines": {
+    "node": "12.19"
   }
 }

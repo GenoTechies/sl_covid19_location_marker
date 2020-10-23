@@ -26,6 +26,9 @@ async function getPlaces() {
 // Handle user input
 const form = document.getElementById('form');
 const place = document.getElementById('place');
+var description = document.getElementById('description');
+var source = document.getElementById('source');
+var date = document.getElementById('date');
 
 function handleChange() {
     if (place.value === '') {
@@ -43,9 +46,18 @@ async function addPlace(e) {
         place.placeholder = 'Please fill in an address';
         return;
     }
+    if (source.value === '') {
+        source.placeholder = 'Please fill in an soruce';
+        return;
+    }
 
+    console.log('description.value');
+    console.log(description.value);
     const sendBody = {
-        address: place.value
+        address: place.value,
+        descriptiontext:description.value,
+        sourcetext:source.value,
+        datetext:date.value
     };
 
     try {

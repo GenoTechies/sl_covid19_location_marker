@@ -6,6 +6,7 @@ exports.addPlace = async (req, res, next) => {
     try {
         const place = await Place.create(req.body);
         console.log('write');
+        console.log(place);
         return res.status(200).json({
             success: true,
             data: place

@@ -24,6 +24,8 @@ async function getPlaces() {
             properties: {
                 city: place.location.city,
                 description:place.properties.description,
+                orignateddate:place.properties.orignateddate,
+                source:place.properties.source,
                 icon:place.properties.icon
             }
         }
@@ -55,15 +57,15 @@ async function showMap() {
             source: 'api',
             layout: {
                 'icon-image': 'marker-15',
-                'icon-allow-overlap': true,
-                'text-allow-overlap': true,
-                'icon-size': 2,
+                'icon-allow-overlap': false,
+                'text-allow-overlap': false,
+                'icon-size': 3,
                 'text-field': '{city}',
                 'text-offset': [0, 0.9],
                 'text-anchor': 'top'
             },
             paint: {
-                "text-color": "#00d1b2",
+                "text-color": "red"
             },
         });
         //map.setMaxBounds(bounds);
@@ -87,6 +89,9 @@ async function showMap() {
         console.log(e)
     var coordinates = e.features[0].geometry.coordinates.slice();
     var description = e.features[0].properties.description;
+    var source = e.features[0].properties.source;
+    var date = e.features[0].properties.orignateddate;
+     
      
     // Ensure that if the map is zoomed out such that multiple
     // copies of the feature are visible, the popup appears
@@ -97,7 +102,7 @@ async function showMap() {
      
     new mapboxgl.Popup()
     .setLngLat(coordinates)
-    .setHTML(description)
+    .setHTML(description+'<br/>'+source+'<br/>'+date)
     .addTo(map);
     });
      
@@ -113,67 +118,7 @@ async function showMap() {
 
     });
 };
-// Handle user input
-const form = document.getElementById('form');
-const place = document.getElementById('place');
 
-function handleChange() {
-    if (place.value === '') {
-        place.style.border = '3px solid lightcoral';
-    } else {
-        place.style.border = 'none';
-    }
-}
-
-// Send POST to API to add place
-async function addPlace(e) {
-    e.preventDefault();
-
-    if (place.value === '') {
-        place.placeholder = 'Please fill in an address';
-        return;
-    }
-
-    const sendBody = {
-        address: place.value
-    };
-
-    try {
-        place.value = '';
-        place.placeholder = 'Loading...';
-
-        const res = await fetch('/api', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sendBody)
-        });
-
-        if (res.status === 400) {
-            throw Error;
-        }
-        
-        if (res.status === 200) {
-            place.style.border = 'none';
-            place.placeholder = 'Succesfully added!';
-            
-            // Retrieve updated data
-            places = await getPlaces();
-
-           // map.getSource('api').setData({
-             //   type: 'FeatureCollection',
-               // features: places
-            //});
-        }
-    } catch (err) {
-        place.placeholder = err;
-        return;
-    }
-};
-
-//place.addEventListener('keyup', handleChange);
-//form.addEventListener('submit', addPlace);
 
 // Render places
 showMap();

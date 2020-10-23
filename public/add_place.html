@@ -10,17 +10,17 @@
    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
-    <section style="height: 30vh;">
+    <section style="height: 100vh;">
         <section class="hero is-primary">
             <div class="hero-body" style="padding: 1.5rem;">
             <div class="container">
                 <h1 class="title" style="margin-bottom: 40px;">
                     <i class="fas fa-globe-americas"></i>
-                    Visited Places
+                    Reported place 
                 </h1>
                 <p class="subtitle">
-                    Below you will find an user generated map of visited places. 
-                    <br>Where have you been to?
+                    Below you will find an user generated map of reported  places. 
+                    <br>Where you want to report?
                 </p>
             </div>
             </div>
@@ -34,8 +34,28 @@
                             <i id="input-icon" class="fas fa-map-marker-alt"></i>
                         </span>
                     </div>
+                   
+                  
+                </div>
+                <div class="container" style="display: flex;">
+                    <div class="control" style="width:100%;">
+                        <input id="source" class="input is-medium is-rounded" type="text" placeholder="Source">
+                    </div>
+                </div>
+                <div class="container" style="display: flex;">
+                    <div class="control" style="width:100%;">
+                        <input id="date" class="input is-medium is-rounded" type="text" placeholder="Reproted Date  like : 2020-10-23">
+                    </div>
+                </div>
+                <div class="container" style="display: flex;">
+                    <div class="control" style="width:100%;">
+                        <input id="description" class="input is-medium is-rounded" type="text" placeholder="Description">
+                    </div>
+
+                </div>
+                <div class="container" style="display: flex;">
                     <button type="submit" style="margin-left:15px; margin-bottom:30px;" class="button is-primary is-inverted is-rounded is-outlined is-medium">
-                        Add Place!
+                        Add  Location
                     </button>
                 </div>
             </form> 
