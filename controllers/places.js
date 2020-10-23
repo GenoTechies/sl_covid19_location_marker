@@ -20,9 +20,9 @@ exports.addPlace = async (req, res, next) => {
 // Get all places
 // Route: /api
 exports.getPlaces = async (req, res, next) => {
+    console.log('get method');
     try {
         const places = await Place.find();
-
         return res.status(200).json({
             succes: true,
             count: places.length,
