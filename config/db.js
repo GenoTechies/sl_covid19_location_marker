@@ -7,7 +7,16 @@ const connectDB = async () => {
             useUnifiedTopology: true
         });
 
-        console.log(`MongoDB connected: ${conn.connection.host}`);
+       
+        mongoose.connection
+                .once("open", function () {
+                    //console.log("DB Connected!");
+                    console.log(`MongoDB connected: ${conn.connection.host}`);
+                })
+                .on("error", function (error) {
+                    console.log("Error is: ", error);
+                });
+                
     } catch (err) {
         console.log(err);
     }
