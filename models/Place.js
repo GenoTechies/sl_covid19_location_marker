@@ -5,6 +5,7 @@ const PlaceSchema = new mongoose.Schema({
     descriptiontext:String,
     datetext:String,
     sourcetext:String,
+    counttext:Number,
     address: {
         type: String,
         required: [true, 'Please add an address']
@@ -13,6 +14,7 @@ const PlaceSchema = new mongoose.Schema({
         description:String,
         source:String,
         orignateddate:Date,
+        count:Number,
         icon: String
         },
     location: {
@@ -49,6 +51,7 @@ PlaceSchema.pre('save', async function(next) {
         description:this.descriptiontext,
         orignateddate:new Date(this.datetext),
         source:this.sourcetext,
+        count:this.counttext,
         icon:'bar'
     };
       // Do not save address

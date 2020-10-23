@@ -29,6 +29,7 @@ const place = document.getElementById('place');
 var description = document.getElementById('description');
 var source = document.getElementById('source');
 var date = document.getElementById('date');
+var count = document.getElementById('count');
 
 function handleChange() {
     if (place.value === '') {
@@ -57,7 +58,8 @@ async function addPlace(e) {
         address: place.value,
         descriptiontext:description.value,
         sourcetext:source.value,
-        datetext:date.value
+        datetext:date.value,
+        counttext:count.value
     };
 
     try {

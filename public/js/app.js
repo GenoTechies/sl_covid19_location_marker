@@ -26,6 +26,7 @@ async function getPlaces() {
                 description:place.properties.description,
                 orignateddate:place.properties.orignateddate,
                 source:place.properties.source,
+                count:place.properties.count,
                 icon:place.properties.icon
             }
         }
@@ -59,7 +60,7 @@ async function showMap() {
                 'icon-image': 'marker-15',
                 'icon-allow-overlap': false,
                 'text-allow-overlap': false,
-                'icon-size': 3,
+                'icon-size': 4,
                 'text-field': '{city}',
                 'text-offset': [0, 0.9],
                 'text-anchor': 'top'
@@ -91,6 +92,7 @@ async function showMap() {
     var description = e.features[0].properties.description;
     var source = e.features[0].properties.source;
     var date = e.features[0].properties.orignateddate;
+    var count = e.features[0].properties.count;
      
      
     // Ensure that if the map is zoomed out such that multiple
@@ -102,7 +104,7 @@ async function showMap() {
      
     new mapboxgl.Popup()
     .setLngLat(coordinates)
-    .setHTML(description+'<br/>'+source+'<br/>'+date)
+    .setHTML(count+'<br/>'+description+'<br/>'+source+'<br/>'+date)
     .addTo(map);
     });
      
