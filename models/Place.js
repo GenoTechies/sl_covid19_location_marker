@@ -38,15 +38,10 @@ const PlaceSchema = new mongoose.Schema({
 
 // Before saving, convert address to geoCode
 PlaceSchema.pre('save', async function(next) {
-    const loc = await geoCoder.geocode(this.address);
-    console.log('this.descriptiontext');
-    console.log(this.descriptiontext);
-    this.location = {
-        type: 'Point',
-        coordinates: [(loc[0].longitude+(((Math.random() * 5) - 5)/1000)).toFixed(6), (loc[0].latitude+(((Math.random() * 2) - 2)/1000)).toFixed(6)],
-        city: loc[0].city,
-        formattedAddress: loc[0].formattedAddress
-    };
+    //const loc = await geoCoder.geocode(this.address);
+    console.log('this.address');
+    console.log(this.address);
+   
     this.properties= {
         description:this.descriptiontext,
         orignateddate:new Date(this.datetext),
