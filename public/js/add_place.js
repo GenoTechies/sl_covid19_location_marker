@@ -129,7 +129,7 @@ async function addPlace(e) {
         location: {
             type: 'Point',
             //coordinates: [JSON.parse(cordinateObject).coordinates[0], JSON.parse(cordinateObject).coordinates[1]],
-            coordinates: [(JSON.parse(cordinateObject).coordinates[0]+(((Math.random() * 5) - 5)/10000)).toFixed(6), (JSON.parse(cordinateObject).coordinates[1]+(((Math.random() * 2) - 2)/10000)).toFixed(6)],
+            coordinates: [(JSON.parse(cordinateObject).coordinates[0]+(((Math.random() * 5) - 5)/100000)).toFixed(6), (JSON.parse(cordinateObject).coordinates[1]+(((Math.random() * 2) - 2)/100000)).toFixed(6)],
             city: placeData.value,
             formattedAddress: JSON.parse(localStorage.getItem('addressObject'))
         }
