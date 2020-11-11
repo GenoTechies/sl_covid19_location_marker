@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Healthylk.com</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+   <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+   <style>
+    #map {
+      top: 0;
+      bottom: 0;
+      width: 80%;
+      height: 60vh;
+    }
+</style>
+</head>
+<body>
+    <section style="height: 100vh;">
+        <section class="hero is-primary">
+            <div class="hero-body" style="padding: 1.5rem;">
+            <div class="container">
+                <h1 class="title" style="margin-bottom: 40px;">
+                    <i class="fas fa-globe-americas"></i>
+                    Add Medical Center
+                </h1>
+                <p class="subtitle">
+                    Where you want to add?
+                </p>
+            </div>
+            <div class="container" >
+                <div id='map'></div>
+            </div>
+            </div>
+        </section>
+        <section class="container-fluid has-background-primary" style="height:100%;">
+            <form id="form">
+                <div class="container" style="display: flex;">
+                    <div class="control has-icons-left" style="width:100%;">
+                        <input id="place" class="input is-medium is-rounded"   type="text" placeholder="Where have you been to?">
+                        <span class="icon is-left">
+                            <i id="input-icon" class="fas fa-map-marker-alt"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="container" style="display: flex;">
+                    <button type="submit" style="margin-left:15px; margin-bottom:30px;" class="button is-primary is-inverted is-rounded is-outlined is-medium">
+                        Add  Location
+                    </button>
+                </div>
+            </form> 
+        </section>
+    </section>
+      <script src="./js/add_center.js"></script>
+      <script>
+    
+      </script>
+</body>
+</html>
