@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
+var bodyParser = require('body-parser');
 
 // Load env variables
 dotenv.config({ path: './config/config.env' });
@@ -13,7 +14,13 @@ connectDB();
 const app = express();
 
 // Body parser
-app.use(express.json());
+//app.use(express.json());
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({
+   extended: true
+}));
+
 
 // Enable CORS
 app.use(cors());

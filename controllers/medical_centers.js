@@ -23,6 +23,7 @@ exports.getCenters = async (req, res, next) => {
     console.log('get method centers');
     try {
         const places = await Place.find();
+        //res.type('json');
         return res.status(200).json({
             succes: true,
             count: places.length,
