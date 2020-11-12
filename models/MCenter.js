@@ -3,10 +3,6 @@ const geoCoder = require('../utils/geocoder');
 
 const MCenterSchema = new mongoose.Schema({
     name:String,
-    address: {
-        type: String,
-        required: [true, 'Please add an address']
-    },
     location: {
         type: {
             type: String,
@@ -17,7 +13,6 @@ const MCenterSchema = new mongoose.Schema({
             index: '2dsphere'
         }
     },
-    
     createdAt: {
         type: Date,
         default: Date.now()
