@@ -22,7 +22,7 @@ exports.addPlace = async (req, res, next) => {
 exports.getPlaces = async (req, res, next) => {
     console.log('get method');
     try {
-        const places = await Place.find();
+        const places = await Place.find().limit(700);
         return res.status(200).json({
             succes: true,
             count: places.length,
