@@ -33,3 +33,29 @@ exports.getPlaces = async (req, res, next) => {
         res.status(500);
     }
 };
+
+
+
+exports.getPlacesByDate = async (req, res, next) => {
+    console.log('getPlacesByDate method');
+    const startdate = req.query.startdate;
+    const enddate = req.query.enddate;
+    console.log(startdate,enddate);
+    try {
+        //const places = await Place.find().limit(700);
+        const places = await Place.find({
+            datetext: {
+                $gte:startdate,
+                $lt: enddate
+            }
+        })
+        return res.status(200).json({
+            succes: true,
+            count: places.length,
+            data: places
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500);
+    }
+};

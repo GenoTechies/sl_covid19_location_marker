@@ -35,6 +35,38 @@ async function getPlaces() {
     return places;
 };
 
+
+// Get places from API with Dates
+async function getPlacesWithDate(startdate,enddate) {
+    const res = await fetch('/api/date?startdate='+startdate+'&enddate='+enddate);
+    const data = await res.json();
+
+    let places = data.data.map(place => (
+        {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [place.location.coordinates[0], place.location.coordinates[1]]
+            },
+            properties: {
+                city: place.location.city,
+                description:place.properties.description,
+                orignateddate:place.properties.orignateddate,
+                source:place.properties.source,
+                count:place.properties.count,
+                icon:place.properties.icon
+            }
+        }
+    ));
+
+    return places;
+};
+
+
+ 
+
+
+
 async function loadFeatures(places) {
     console.log('load features');
     map.on('load', () => {
@@ -77,7 +109,7 @@ async function loadFeatures(places) {
   
           // }, 1000);
   
-  
+          /*
           // When a click event occurs on a feature in the places layer, open a popup at the
   // location of the feature, with description HTML from its properties.
       map.on('click', 'api', function (e) {
@@ -112,7 +144,7 @@ async function loadFeatures(places) {
       map.on('mouseleave', 'api', function () {
       map.getCanvas().style.cursor = '';
       });
-  
+        */
       }) ;
 }
 
@@ -125,5 +157,44 @@ async function showMap() {
 };
 
 
+
+
+async function showMapWithDates(start,end) {
+    let places = await getPlacesWithDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+    console.log(places);
+    await loadFeatures(places);
+};
+
+
 // Render places
 showMap();
+
+
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    async function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        console.log( start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+       // let places = await getPlacesWithDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+   // console.log(places);
+    //await loadFeatures(places);
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+});

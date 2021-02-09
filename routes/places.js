@@ -1,5 +1,5 @@
 const express = require('express');
-const { getPlaces, addPlace } = require('../controllers/places');
+const { getPlaces, addPlace ,getPlacesByDate} = require('../controllers/places');
 const { getCenters, addCenter} = require('../controllers/medical_centers');
 
 const router = express.Router();
@@ -13,5 +13,11 @@ router
     .route('/medical')
     .get(getCenters)
     .post(addCenter);
+
+router
+    .route('/date')
+    .get(getPlacesByDate)
+
+
 
 module.exports = router;
