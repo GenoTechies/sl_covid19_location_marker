@@ -35,6 +35,34 @@ async function getPlaces() {
     return places;
 };
 
+ function getPlacesPromise() {
+    fetch('/api')
+    .then((response) => response.json())
+  .then((data) => {
+
+    let places = data.data.map(place => (
+        {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [place.location.coordinates[0], place.location.coordinates[1]]
+            },
+            properties: {
+                city: place.location.city,
+                description:place.properties.description,
+                orignateddate:place.properties.orignateddate,
+                source:place.properties.source,
+                count:place.properties.count,
+                icon:place.properties.icon
+            }
+        }
+    ));
+
+    return places;
+
+    })
+};
+
 
 // Get places from API with Dates
 async function getPlacesWithDate(startdate,enddate) {
@@ -63,12 +91,8 @@ async function getPlacesWithDate(startdate,enddate) {
 };
 
 
- 
-
-
-
 async function loadFeatures(places) {
-    console.log('load features');
+   // console.log('load features');
     map.on('load', () => {
         map.addSource('api', {
               type: 'geojson',
@@ -148,13 +172,54 @@ async function loadFeatures(places) {
       }) ;
 }
 
+
+function loadFeaturesPromise(places) {
+    //console.log('load features Promise');
+    map.on('load', () => {
+        map.addSource('api', {
+              type: 'geojson',
+              data: {
+                  type: 'FeatureCollection',
+                  features: places
+              }
+          }); 
+          
+       map.addLayer({
+              id: 'layer1',
+              type: 'symbol',
+              minzoom: 0,
+              source: 'api',
+              layout: {
+                  'icon-image': 'marker-15',
+                  'icon-allow-overlap': false,
+                  'text-allow-overlap': false,
+                  'icon-size': 4,
+                  'text-field': '{city}',
+                  'text-offset': [0, 0.9],
+                  'text-anchor': 'top'
+              },
+              paint: {
+                  "text-color": "red"
+              },
+          });  
+
+      }) ;
+}
+
 // Show places on map
 async function showMap() {
     let places = await getPlaces();
    // places = places.slice(0, 100);
-    console.log(places);
+    //console.log(places);
     await loadFeatures(places);
 };
+
+function showMapPromise() {
+    getPlacesPromise().then((places) => {
+       // console.log(places);
+        loadFeaturesPromise(places)
+    })
+}
 
 
 
@@ -167,7 +232,8 @@ async function showMapWithDates(start,end) {
 
 
 // Render places
-showMap();
+//showMap();
+//showMapPromise();
 
 
 $(function() {
@@ -175,12 +241,19 @@ $(function() {
     var start = moment().subtract(29, 'days');
     var end = moment();
 
-    async function cb(start, end) {
+ async function cb(start, end) {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         console.log( start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
-       // let places = await getPlacesWithDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-   // console.log(places);
-    //await loadFeatures(places);
+         let places = await getPlacesWithDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+         console.log(places);
+         await loadFeatures(places);
+
+    try {
+        let places = await getPlacesWithDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+        //console.log(places);
+    } catch (e) {
+        console.log(e)
+      }
     }
 
     $('#reportrange').daterangepicker({

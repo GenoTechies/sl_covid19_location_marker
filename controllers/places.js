@@ -37,10 +37,10 @@ exports.getPlaces = async (req, res, next) => {
 
 
 exports.getPlacesByDate = async (req, res, next) => {
-    console.log('getPlacesByDate method');
+   // console.log('getPlacesByDate method');
     const startdate = req.query.startdate;
     const enddate = req.query.enddate;
-    console.log(startdate,enddate);
+   // console.log(startdate,enddate);
     try {
         //const places = await Place.find().limit(700);
         const places = await Place.find({
