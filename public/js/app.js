@@ -95,58 +95,7 @@ async function loadFeatures(places) {
         },
     }); 
         
-
-     
         
-          //map.setMaxBounds(bounds);
-  
-          // Retrieving API data every second
-          // window.setInterval(async () => {
-          //     places = await getPlaces();
-  
-          //     map.getSource('api').setData({
-          //         type: 'FeatureCollection',
-          //         features: places
-          //     });
-  
-          // }, 1000);
-  
-          /*
-          // When a click event occurs on a feature in the places layer, open a popup at the
-  // location of the feature, with description HTML from its properties.
-      map.on('click', 'api', function (e) {
-          console.log('click');
-          console.log(e)
-      var coordinates = e.features[0].geometry.coordinates.slice();
-      var description = e.features[0].properties.description;
-      var source = e.features[0].properties.source;
-      var date = e.features[0].properties.orignateddate;
-      var count = e.features[0].properties.count;
-       
-       
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-      }
-       
-      new mapboxgl.Popup()
-      .setLngLat(coordinates)
-      .setHTML(count+'<br/>'+description+'<br/>'+source+'<br/>'+date)
-      .addTo(map);
-      });
-       
-      // Change the cursor to a pointer when the mouse is over the places layer.
-      map.on('mouseenter', 'api', function () {
-      map.getCanvas().style.cursor = 'pointer';
-      });
-       
-      // Change it back to a pointer when it leaves.
-      map.on('mouseleave', 'api', function () {
-      map.getCanvas().style.cursor = '';
-      });
-        */
       }) ;
 
       var mapSoruce = map.getSource('trace');
@@ -160,6 +109,42 @@ async function loadFeatures(places) {
       }else {
        // console.log('mapSoruce in undefined');
       }
+
+
+        // When a click event occurs on a feature in the places layer, open a popup at the
+  // location of the feature, with description HTML from its properties.
+  map.on('click', 'trace', function (e) {
+    //console.log('click trace');
+   // console.log(e)
+var coordinates = e.features[0].geometry.coordinates.slice();
+var description = e.features[0].properties.description;
+var source = e.features[0].properties.source;
+var date = e.features[0].properties.orignateddate;
+var count = e.features[0].properties.count;
+ 
+ 
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+ 
+new mapboxgl.Popup()
+.setLngLat(coordinates)
+.setHTML(count+'<br/>'+description+'<br/>'+source+'<br/>'+date)
+.addTo(map);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'api', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'api', function () {
+map.getCanvas().style.cursor = '';
+});
 }
 
 
@@ -212,3 +197,17 @@ $(function() {
 
     cb(start, end);
 });
+
+
+ //map.setMaxBounds(bounds);
+  
+          // Retrieving API data every second
+          // window.setInterval(async () => {
+          //     places = await getPlaces();
+  
+          //     map.getSource('api').setData({
+          //         type: 'FeatureCollection',
+          //         features: places
+          //     });
+  
+          // }, 1000);
