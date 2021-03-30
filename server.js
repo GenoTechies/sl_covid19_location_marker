@@ -5,23 +5,6 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 var bodyParser = require('body-parser');
 
-const fs = require('fs');
-let rawdata = fs.readFileSync('sinhala_songs_corpus.json');
-let student = JSON.parse(jsonEscape(rawdata));
-var lyrics_list = ""
-for(var attributename in student){
-   //console.log(student[attributename].lyrics);
-   var single_lyrics= student[attributename].lyrics;
-   lyrics_list=lyrics_list+"\\n"+single_lyrics
-   //fs.writeFileSync('message.txt', single_lyrics.join(""));
-}
-
-fs.writeFileSync('student-2.txt', lyrics_list);
-
-function jsonEscape(str)  {
-   return str.toString().replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
-}
-
 // Load env variables
 dotenv.config({ path: './config/config.env' });
 
